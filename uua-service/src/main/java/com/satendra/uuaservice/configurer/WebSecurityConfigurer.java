@@ -21,16 +21,13 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //@Autowired
-    //private UserDetailsService userDetailsService;
+
     @Autowired
     private DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("satendra").password(passwordEncoder.encode("saten")).roles("USER");**/
-        auth.jdbcAuthentication().dataSource(dataSource)
+       auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled"
                         + " from users where username=?")
                 .authoritiesByUsernameQuery("select username, authority "
