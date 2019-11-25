@@ -21,23 +21,20 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @Autowired
     private DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled"
-                        + " from users where username=?")
-                .authoritiesByUsernameQuery("select username, authority "
-                        + "from authorities where username=?")
-                .passwordEncoder(passwordEncoder);
+       auth.jdbcAuthentication()
+               .dataSource(dataSource)
+               .usersByUsernameQuery("select username, password, enabled from users where username=?")
+               .authoritiesByUsernameQuery("select username, authority from authorities where username=?")
+               .passwordEncoder(passwordEncoder);
     }
 
-
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
